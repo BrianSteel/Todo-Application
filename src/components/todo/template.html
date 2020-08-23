@@ -1,0 +1,53 @@
+<div id='Todo'>
+
+    <h1>Todos</h1>
+
+    <div class='todoList'>
+        <div class='todo-wrapper'>
+            <div class="todo-container">
+                <div>
+                    <input class='input-todo' placeholder="Add items to your list" type="text" v-model="item"
+                        @keyup.enter="addItem" />
+                </div>
+                <div class="todolist-wrapper">
+                    <div v-for="(todo, id) in todosSelected" :key="id" class="items">
+
+        <!-- ...............Input for edit.................. -->
+                        <div class='todo-name-items'>
+                            <input class='todo-name-edit' v-if="todo.edit" type="text" v-model="todo.name"
+                                @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)" v-focus />
+
+    <!-- .....................Input for checkbox............. -->
+                            <label :class="{ whenCompleted:todo.completed }" v-if="!todo.edit"
+                                @dblclick="editItem(todo)">
+                                <input v-if="!todo.edit" @change="input(todo)" class='todo-name-checkbox' type="checkbox"
+                                v-model="todo.completed" />
+                                {{todo.name}}
+                            </label>
+                        </div>
+
+            <!-- ----------- Todo Item Delete button------------ -->
+                        <div v-if="!todo.edit" class="delete-btn" @click="deleteItem(id)">&#10008;</div>
+                    </div>
+
+        <!-- ------------------------------------------ -->
+                    <div v-if='todos.length > 0' class="todo-footer-wrapper">
+                        <div class="count" v-if='todos.length > 0' >{{ totalItems }} {{checkFor1}} Left</div>
+                        <div class="todo-selectors">
+                            <label :class="{activeItem: selectedVar === 'allItems'}" class
+                                @click="selectedfunc('allItems')">All</label>
+                            <label :class="{activeItem: selectedVar === 'activeItems'}"
+                                @click="selectedfunc('activeItems')">Active</label>
+                            <label :class="{activeItem: selectedVar === 'completedItems'}"
+                                @click="selectedfunc('completedItems')">Completed</label>
+                        </div>
+                        <div v-if="true" class="clear-completed">
+                            <label v-show='todos.length>totalItems' @click="clearCompleted">Clear Completed</label>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
